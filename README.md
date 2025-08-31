@@ -55,7 +55,7 @@ terraform -version
 
 <h3>3. Configure Kubeconfig</h3>
 <pre>
-aws eks --region ap-south-1 update-kubeconfig --name devopsshack-cluster
+aws eks --region ap-south-1 update-kubeconfig --name uday-cluster
 </pre>
 
 <h3>4. Install kubectl</h3>
@@ -89,7 +89,7 @@ terraform apply -auto-approve
 <pre>
 eksctl utils associate-iam-oidc-provider \
   --region ap-south-1 \
-  --cluster devopsshack-cluster \
+  --cluster uday-cluster \
   --approve
 </pre>
 
@@ -99,7 +99,7 @@ eksctl create iamserviceaccount \
   --region ap-south-1 \
   --name ebs-csi-controller-sa \
   --namespace kube-system \
-  --cluster devopsshack-cluster \
+  --cluster uday-cluster \
   --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
   --approve \
   --override-existing-serviceaccounts
@@ -144,4 +144,3 @@ kubectl get pods --all-namespaces
   <a href="https://github.com/p-udaykiran">GitHub</a> | 
   <a href="https://www.linkedin.com/in/udaykiran-pagidimari-30275725a/">LinkedIn</a>
 </p>
-
