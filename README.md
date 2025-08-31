@@ -1,146 +1,128 @@
-<h1 align="center">🚀 Terraform EKS Cluster Deployment</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
 
+<!-- Title -->
+<h1 align="center">🚀 GitOps CI/CD Pipeline Project</h1>
+
+<!-- Logos -->
 <p align="center">
+  <img src="https://www.jenkins.io/images/logos/jenkins/jenkins.png" alt="Jenkins" width="70"/>
+  <img src="https://raw.githubusercontent.com/cncf/artwork/master/projects/argo/icon/color/argo-icon-color.svg" alt="ArgoCD" width="70"/>
   <img src="https://raw.githubusercontent.com/cncf/artwork/master/projects/kubernetes/icon/color/kubernetes-icon-color.svg" alt="Kubernetes" width="70"/>
+  <img src="https://www.svgrepo.com/show/376356/aws.svg" alt="AWS" width="70"/>
   <img src="https://www.svgrepo.com/show/448253/terraform.svg" alt="Terraform" width="70"/>
-  <img src="https://www.svgrepo.com/show/376354/amazon-eks.svg" alt="Amazon EKS" width="70"/>
 </p>
 
 <p align="center">
-  <b>Automating Amazon EKS Cluster Creation with Terraform</b><br>
-  Infrastructure as Code (IaC) for Kubernetes on AWS
+  <b>End-to-End CI/CD with GitOps on AWS EKS</b><br>
+  <em>Automated pipeline using Jenkins, SonarQube, Nexus, ArgoCD, Docker, Terraform & Kubernetes</em>
 </p>
 
 <hr>
 
+<!-- Project Overview -->
 <h2>📌 Project Overview</h2>
 <p>
-This repository contains Terraform configuration files to provision an <b>Amazon EKS Cluster</b> along with the required AWS resources.  
-Using Terraform as an <b>Infrastructure as Code (IaC)</b> tool, the cluster setup is automated, reproducible, and scalable.  
+This project showcases a <b>complete DevOps pipeline</b> with <b>GitOps principles</b>.  
+It integrates <b>Continuous Integration (CI)</b>, <b>Artifact Management</b>, <b>Infrastructure as Code (IaC)</b>, and <b>Continuous Delivery (CD)</b> into an automated workflow running on <b>AWS EKS</b>.  
+The goal is to achieve reproducibility, scalability, and seamless deployments.
 </p>
 
 <hr>
 
-<h2>⚡ Prerequisites</h2>
+<!-- Workflow -->
+<h2>⚡ Workflow</h2>
+<ol>
+  <li>☁️ Provision AWS EC2 instances for Jenkins, Nexus, and SonarQube</li>
+  <li>⚙️ Jenkins pipeline triggers build, test, and static code analysis</li>
+  <li>📦 Store build artifacts in Nexus Repository</li>
+  <li>🐳 Build & push Docker images</li>
+  <li>🔄 GitOps updates Kubernetes manifests in GitHub</li>
+  <li>🚀 ArgoCD continuously syncs and deploys workloads to EKS</li>
+  <li>🌐 Application exposed via service/domain</li>
+</ol>
+
+<hr>
+
+<!-- Tools & Technologies -->
+<h2>🛠️ Tools & Technologies</h2>
 <ul>
-  <li>AWS Account with IAM permissions</li>
-  <li>Linux environment (Ubuntu preferred)</li>
-  <li><a href="https://developer.hashicorp.com/terraform/downloads">Terraform</a></li>
-  <li><a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">AWS CLI</a></li>
-  <li><a href="https://kubernetes.io/docs/tasks/tools/">kubectl</a></li>
-  <li><a href="https://eksctl.io/">eksctl</a></li>
+  <li>☁️ <b>AWS EKS</b> – Managed Kubernetes Cluster</li>
+  <li>⚙️ <b>Jenkins</b> – Continuous Integration & Automation</li>
+  <li>🔍 <b>SonarQube</b> – Code Quality & Security Scanning</li>
+  <li>📦 <b>Nexus</b> – Artifact Repository Management</li>
+  <li>🐳 <b>Docker</b> – Containerization</li>
+  <li>🚀 <b>ArgoCD</b> – GitOps Continuous Delivery</li>
+  <li>☸️ <b>Kubernetes</b> – Orchestration Platform</li>
+  <li>📜 <b>Terraform</b> – Infrastructure as Code (IaC)</li>
 </ul>
 
 <hr>
 
-<h2>🛠️ Installation & Setup</h2>
+<!-- Screenshots -->
+<h2>🖼️ Project Screenshots</h2>
+<p align="center"><i>Execution stages of the CI/CD pipeline with GitOps:</i></p>
 
-<h3>1. Install AWS CLI</h3>
-<pre>
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-sudo apt install unzip -y
-unzip awscliv2.zip
-sudo ./aws/install
-aws configure
-</pre>
+<h3>1️⃣ AWS Server Setup</h3>
+<p align="center">
+  <img src="https://github.com/p-udaykiran/multi-tier-ci/blob/main/src/main/resources/templates/AWS%20servers.png?raw=true" alt="AWS Server" width="750"/>
+</p>
 
-<h3>2. Install Terraform</h3>
-<pre>
-sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-sudo apt-get update && sudo apt-get install terraform -y
-terraform -version
-</pre>
+<h3>2️⃣ Jenkins Pipeline</h3>
+<p align="center">
+  <img src="https://github.com/p-udaykiran/multi-tier-ci/blob/main/src/main/resources/templates/pipeline.png?raw=true" alt="Jenkins Pipeline" width="750"/>
+</p>
 
-<h3>3. Configure Kubeconfig</h3>
-<pre>
-aws eks --region ap-south-1 update-kubeconfig --name uday-cluster
-</pre>
+<h3>3️⃣ Nexus Repository</h3>
+<p align="center">
+  <img src="https://github.com/p-udaykiran/multi-tier-ci/blob/main/src/main/resources/templates/nexus.png?raw=true" alt="Nexus Repo" width="750"/>
+</p>
 
-<h3>4. Install kubectl</h3>
-<pre>
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-kubectl version --client
-</pre>
+<h3>4️⃣ GitOps in Action</h3>
+<p align="center">
+  <img src="https://github.com/p-udaykiran/multi-tier-ci/blob/main/src/main/resources/templates/gtiops.png?raw=true" alt="GitOps Implementation" width="750"/>
+</p>
 
-<h3>5. Install eksctl</h3>
-<pre>
-curl -sLO "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz"
-tar -xzf eksctl_$(uname -s)_amd64.tar.gz
-sudo mv eksctl /usr/local/bin
-eksctl version
-</pre>
+<h3>5️⃣ Kubernetes Cluster</h3>
+<p align="center">
+  <img src="https://github.com/p-udaykiran/multi-tier-ci/blob/main/src/main/resources/templates/cluster.png?raw=true" alt="Kubernetes Cluster" width="750"/>
+</p>
+
+<h3>6️⃣ Final Application Output</h3>
+<p align="center">
+  <img src="https://github.com/p-udaykiran/multi-tier-ci/blob/main/src/main/resources/templates/output.png?raw=true" alt="Final Output" width="750"/>
+</p>
 
 <hr>
 
-<h2>🚀 Deploying the EKS Cluster</h2>
-
-<h3>1. Initialize & Apply Terraform</h3>
-<pre>
-terraform init
-terraform plan
-terraform apply -auto-approve
-</pre>
-
-<h3>2. Associate IAM OIDC Provider</h3>
-<pre>
-eksctl utils associate-iam-oidc-provider \
-  --region ap-south-1 \
-  --cluster uday-cluster \
-  --approve
-</pre>
-
-<h3>3. Create IAM Service Account for EBS CSI Driver</h3>
-<pre>
-eksctl create iamserviceaccount \
-  --region ap-south-1 \
-  --name ebs-csi-controller-sa \
-  --namespace kube-system \
-  --cluster uday-cluster \
-  --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
-  --approve \
-  --override-existing-serviceaccounts
-</pre>
-
-<h3>4. Deploy Add-ons</h3>
-<pre>
-# EBS CSI Driver
-kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/ecr/?ref=release-1.11"
-
-# NGINX Ingress Controller
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
-
-# Cert-Manager
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.0/cert-manager.yaml
-</pre>
+<!-- Outcome -->
+<h2>✅ Outcome</h2>
+<p>
+This project delivers a <b>production-ready CI/CD workflow</b> using <b>GitOps</b>.  
+Every step from <b>code commit → build → scan → artifact upload → manifest update → deployment</b> is <b>fully automated</b>.  
+Key results include:
+</p>
+<ul>
+  <li>⚡ Faster and reliable deployments</li>
+  <li>🔄 Easy rollbacks with Git history</li>
+  <li>🔒 Improved code quality and security</li>
+  <li>🌍 Scalable and highly available application</li>
+</ul>
 
 <hr>
 
-<h2>📊 Project Structure</h2>
-<pre>
-├── main.tf        # Terraform main configuration
-├── variable.tf    # Input variables
-├── output.tf      # Cluster outputs
-├── README.md      # Documentation
-</pre>
-
-<hr>
-
-<h2>✅ Verification</h2>
-<pre>
-kubectl get nodes
-kubectl get pods --all-namespaces
-</pre>
-
-<hr>
-
+<!-- Author -->
 <h2>📌 Author</h2>
 <p align="center">
   <b>Uday Kiran</b> <br>
-  <em>Developed with ❤️ using Terraform & AWS EKS</em> <br>
-  <a href="https://github.com/p-udaykiran">GitHub</a> | 
-  <a href="https://www.linkedin.com/in/udaykiran-pagidimari-30275725a/">LinkedIn</a>
+ 
+  <a href="https://github.com/p-udaykiran">🌐 GitHub</a> | 
+  <a href="https://www.linkedin.com/in/udaykiran-pagidimari-30275725a/">💼 LinkedIn</a>
 </p>
+
+</body>
+</html>
