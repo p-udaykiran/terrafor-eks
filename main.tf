@@ -1,7 +1,9 @@
+# Configure AWS provider for the specified region (Asia Pacific - Mumbai)
 provider "aws" {
   region = "ap-south-1"
 }
 
+# Create a Virtual Private Cloud (VPC) with a CIDR block of 10.0.0.0/16
 resource "aws_vpc" "uday_vpc" {
   cidr_block = "10.0.0.0/16"
 
@@ -10,6 +12,7 @@ resource "aws_vpc" "uday_vpc" {
   }
 }
 
+# Create two subnets within the VPC, each in different availability zones
 resource "aws_subnet" "uday_subnet" {
   count = 2
   vpc_id                  = aws_vpc.uday_vpc.id
@@ -22,6 +25,7 @@ resource "aws_subnet" "uday_subnet" {
   }
 }
 
+# Create an Internet Gateway and associate it with the VPC
 resource "aws_internet_gateway" "uday_igw" {
   vpc_id = aws_vpc.uday_vpc.id
 
@@ -30,6 +34,7 @@ resource "aws_internet_gateway" "uday_igw" {
   }
 }
 
+# Create a route table and add a default route to the Internet Gateway
 resource "aws_route_table" "uday_route_table" {
   vpc_id = aws_vpc.uday_vpc.id
 
@@ -43,12 +48,14 @@ resource "aws_route_table" "uday_route_table" {
   }
 }
 
+# Associate the route table with the subnets
 resource "aws_route_table_association" "uday_association" {
   count          = 2
   subnet_id      = aws_subnet.uday_subnet[count.index].id
   route_table_id = aws_route_table.uday_route_table.id
 }
 
+# Create a security group for EKS cluster with unrestricted egress
 resource "aws_security_group" "uday_cluster_sg" {
   vpc_id = aws_vpc.uday_vpc.id
 
@@ -64,6 +71,7 @@ resource "aws_security_group" "uday_cluster_sg" {
   }
 }
 
+# Create a security group for EKS node group with unrestricted ingress and egress
 resource "aws_security_group" "uday_node_sg" {
   vpc_id = aws_vpc.uday_vpc.id
 
@@ -86,6 +94,7 @@ resource "aws_security_group" "uday_node_sg" {
   }
 }
 
+# Create an EKS cluster with the specified role and VPC configuration
 resource "aws_eks_cluster" "uday" {
   name     = "uday-cluster"
   role_arn = aws_iam_role.uday_cluster_role.arn
@@ -96,6 +105,7 @@ resource "aws_eks_cluster" "uday" {
   }
 }
 
+# Add the Amazon EBS CSI driver to the EKS cluster
 resource "aws_eks_addon" "ebs_csi_driver" {
   cluster_name    = aws_eks_cluster.uday.name
   addon_name      = "aws-ebs-csi-driver"
@@ -104,6 +114,7 @@ resource "aws_eks_addon" "ebs_csi_driver" {
   resolve_conflicts_on_update = "OVERWRITE"
 }
 
+# Create a node group within the EKS cluster with EC2 instances
 resource "aws_eks_node_group" "uday" {
   cluster_name    = aws_eks_cluster.uday.name
   node_group_name = "uday-node-group"
@@ -124,6 +135,7 @@ resource "aws_eks_node_group" "uday" {
   }
 }
 
+# Create an IAM role for the EKS cluster with the necessary trust policy
 resource "aws_iam_role" "uday_cluster_role" {
   name = "uday-cluster-role"
 
@@ -143,11 +155,13 @@ resource "aws_iam_role" "uday_cluster_role" {
 EOF
 }
 
+# Attach the necessary IAM policy to the EKS cluster role
 resource "aws_iam_role_policy_attachment" "uday_cluster_role_policy" {
   role       = aws_iam_role.uday_cluster_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
 }
 
+# Create an IAM role for the EKS node group with the necessary trust policy
 resource "aws_iam_role" "uday_node_group_role" {
   name = "uday-node-group-role"
 
@@ -167,6 +181,7 @@ resource "aws_iam_role" "uday_node_group_role" {
 EOF
 }
 
+# Attach policies to the node group IAM role for worker node functionality
 resource "aws_iam_role_policy_attachment" "uday_node_group_role_policy" {
   role       = aws_iam_role.uday_node_group_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
